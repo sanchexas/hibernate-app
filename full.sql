@@ -23,10 +23,58 @@ INSERT INTO simple_items (title, price) VALUES
 ('door', 50),
 ('camera', 500);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DROP TABLE IF EXISTS product CASCADE;
 CREATE TABLE product (id bigserial PRIMARY KEY, title VARCHAR(255), price int);
 INSERT INTO product (title, price) VALUES
-('Milk', 10),
+('Milk', 10);
+('Tomato',8),
+('Juice',12);
+
+DROP TABLE IF EXISTS product_user CASCADE;
+CREATE TABLE product_user (id bigserial PRIMARY KEY, name VARCHAR(255));
+INSERT INTO product_user (name) VALUES
+('Oliver'),
+('Bonnie'),
+('Raymond');
+
+DROP TABLE IF EXISTS product_buyer CASCADE;
+CREATE TABLE product_buyer (product_id bigint, user_id bigint, FOREIGN KEY (product_id) REFERENCES product (id), FOREIGN KEY (user_id) REFERENCES product_user (id));
+INSERT INTO product_buyer (product_id, user_id) VALUES
+(1,3),
+(2,1),
+(3,2),
+(2,2),
+(1,1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 DROP TABLE IF EXISTS books CASCADE;

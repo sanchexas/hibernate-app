@@ -7,39 +7,44 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 public class ProductDao {
-    private static SessionFactory factory;
+    private SessionFactory factory;
 
-    public static void init() {
-        PrepareDataApp.forcePrepareData();
-        factory = new Configuration()
-                .configure("configs/product_homework/hibernate.cfg.xml")
-                .buildSessionFactory();
+    public ProductDao(SessionFactory factory) {
+        this.factory = factory;
     }
+//        public static void init() {
+//        PrepareDataApp.forcePrepareData();
+//        factory = new Configuration()
+//                .configure("configs/product_homework/hibernate.cfg.xml")
+//                .buildSessionFactory();
+//    }
 
-    public static void main(String[] args) {
-        try{
-
-
-            init();
-            createProduct();
-            updateProduct();
-            readProduct();
-
-
-
-        } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        shutdown();
-    }
-    }
+//    public static void main(String[] args) {
+//        try{
+//
+//
+//            init();
+//            createProduct();
+//            updateProduct();
+//            readProduct();
+//
+//
+//
+//        } catch (Exception e) {
+//        e.printStackTrace();
+//    } finally {
+//        shutdown();
+//    }
+//    }
 
 
     //CRUD:
 
     //Создание экземпляра
-    public static void createProduct(){
+    public  void createProduct(){
         try (Session session = factory.getCurrentSession()) {
             session.beginTransaction();
             Product Milk = new Product("Milk", 72);
@@ -54,7 +59,7 @@ public class ProductDao {
 
 
     //Чтение экземпляра
-    public static void readProduct(){
+    public void readProduct(){
         try (Session session = factory.getCurrentSession()) {
             session.beginTransaction();
             Product product = session.find(Product.class, 1L);
@@ -66,7 +71,7 @@ public class ProductDao {
 
 
     //Обновление экземпляра
-    public static void updateProduct(){
+    public void updateProduct(){
         try (Session session = factory.getCurrentSession()) {
             session.beginTransaction();
             Product product = session.get(Product.class, 1L);
@@ -77,7 +82,7 @@ public class ProductDao {
 
 
      //Удаление продукта
-    public static void deleteProduct(){
+    public void deleteProduct(){
         try (Session session = factory.getCurrentSession()) {
             session.beginTransaction();
             Product product = session.find(Product.class, 1L);
@@ -85,10 +90,25 @@ public class ProductDao {
             session.getTransaction().commit();
         }
     }
+    public Product findById(Long id) {
+        try (Session session = factory.getCurrentSession()) {
+            session.beginTransaction();
+            Product product = session.get(Product.class, id);
+            session.getTransaction().commit();
+            return product;
+        }
+    }
+    public List<Product> findAll() {
+        try (Session session = factory.getCurrentSession()) {
+            session.beginTransaction();
+            List<Product> products = (List<Product>)session.createQuery("from Product", List.class);
+            session.getTransaction().commit();
+            return products;
+        }
+    }
 
 
-
-    public static void shutdown() {
+    public void shutdown() {
         factory.close();
     }
 }

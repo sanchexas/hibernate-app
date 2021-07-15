@@ -23,6 +23,12 @@ INSERT INTO simple_items (title, price) VALUES
 ('door', 50),
 ('camera', 500);
 
+DROP TABLE IF EXISTS product CASCADE;
+CREATE TABLE product (id bigserial PRIMARY KEY, title VARCHAR(255), price int);
+INSERT INTO product (title, price) VALUES
+('Milk', 10),
+
+
 DROP TABLE IF EXISTS books CASCADE;
 CREATE TABLE books (id bigserial PRIMARY KEY, title VARCHAR(255));
 INSERT INTO books (title) VALUES

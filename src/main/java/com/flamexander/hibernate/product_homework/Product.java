@@ -1,7 +1,7 @@
 package com.flamexander.hibernate.product_homework;
 
 import javax.persistence.*;
-
+import java.util.List;
 @Entity
 @Table(name = "product")
 public class Product {
@@ -16,6 +16,14 @@ public class Product {
 
         @Column(name = "price")
         private int price;
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_buyer",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 
     public Long getId() {
         return id;
@@ -39,6 +47,14 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Product(Long id, String title, int price) {

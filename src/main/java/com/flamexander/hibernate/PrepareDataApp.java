@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 public class PrepareDataApp {
-    // Вопросы: Разница между delete и remove
 
     public static void forcePrepareData() {
         SessionFactory factory = new Configuration()

@@ -3,8 +3,9 @@ package com.flamexander.hibernate.product_homework;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Entity;
 import java.util.List;
-
+@Entity
 public class UserDao {
     private SessionFactory factory;
 
